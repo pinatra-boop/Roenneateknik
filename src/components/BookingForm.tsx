@@ -166,6 +166,9 @@ export default function BookingForm() {
         model: manualModel,
         year: manualYear ? parseInt(manualYear) : undefined,
         fuel: "",
+        variant: undefined,
+        engine: undefined,
+        vin: undefined,
       } : null);
 
       const res = await fetch("/api/booking", {

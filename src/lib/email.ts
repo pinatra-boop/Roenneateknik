@@ -85,7 +85,7 @@ export async function sendBookingNotification(data: BookingEmailData) {
     data.carEngine ? ["Motor", data.carEngine] : null,
     data.carVin ? ["Stelnummer (VIN)", data.carVin] : null,
   ]
-    .filter(Boolean)
+    .filter((x): x is [string, string] => x !== null)
     .map(
       ([label, value]) =>
         `<tr><td style="padding:7px 12px;color:#555;width:45%;border-bottom:1px solid #eee;">${label}</td><td style="padding:7px 12px;color:#111;font-weight:600;border-bottom:1px solid #eee;">${value}</td></tr>`

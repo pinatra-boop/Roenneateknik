@@ -187,7 +187,7 @@ export async function getAllContent(): Promise<ContentMap> {
       if (s.key in CONTENT_DEFAULTS) {
         const k = s.key as keyof ContentMap;
         try {
-          (result as Record<string, unknown>)[k] = {
+          (result as unknown as Record<string, unknown>)[k] = {
             ...(CONTENT_DEFAULTS[k] as object),
             ...JSON.parse(s.value),
           };
