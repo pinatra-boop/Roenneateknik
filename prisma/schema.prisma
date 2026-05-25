@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      Role     @default(ADMIN)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Booking {
+  id            String        @id @default(cuid())
+  customerName  String
+  email         String
+  phone         String
+  licensePlate  String
+  carBrand      String?
+  carModel      String?
+  carYear       Int?
+  carFuel       String?
+  carVariant    String?
+  carEngine     String?
+  serviceType   String
+  serviceId     String?
+  date          DateTime
+  timeSlot      String
+  message       String?
+  status        BookingStatus @default(PENDING)
+  adminNote     String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  service Service? @relation(fields: [serviceId], references: [id])
+}
+
+model Service {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String
+  longDesc    String?
+  price       String?
+  duration    String?
+  icon        String?
+  image       String?
+  featured    Boolean   @default(false)
+  order       Int       @default(0)
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+}
+
+model Car {
+  id           String   @id @default(cuid())
+  brand        String
+  model        String
+  year         Int
+  price        Int
+  mileage      Int
+  fuel         String
+  transmission String
+  color        String?
+  description  String?
+  equipment    String[]
+  images       String[]
+  featured     Boolean  @default(false)
+  sold         Boolean  @default(false)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Contact {
+  id           String        @id @default(cuid())
+  name         String
+  email        String
+  phone        String
+  address      String?
+  city         String?
+  licensePlate String?
+  carBrand     String?
+  carModel     String?
+  message      String
+  status       ContactStatus @default(NEW)
+  adminNote    String?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model BlockedDate {
+  id        String   @id @default(cuid())
+  date      DateTime
+  reason    String?
+  allDay    Boolean  @default(true)
+  timeSlots String[]
+  createdAt DateTime @default(now())
+}
+
+model SiteSettings {
+  id           String   @id @default(cuid())
+  key          String   @unique
+  value        String
+  updatedAt    DateTime @updatedAt
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  author    String
+  rating    Int
+  text      String
+  source    String   @default("google")
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Campaign {
+  id          String    @id @default(cuid())
+  title       String
+  description String
+  image       String?
+  validFrom   DateTime?
+  validTo     DateTime?
+  active      Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum Role {
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  REPLIED
+  ARCHIVED
+}
