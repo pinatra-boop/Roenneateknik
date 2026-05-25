@@ -128,7 +128,7 @@ export default function IndholdPage() {
 
   const addItem = useCallback(<K extends Tab>(tab: K, field: string, template: Record<string, unknown>) => {
     setContent((prev) => {
-      const section = { ...(prev[tab] as Record<string, unknown>) };
+      const section = { ...(prev[tab] as unknown as Record<string, unknown>) };
       section[field] = [...(section[field] as unknown[]), { ...template }];
       return { ...prev, [tab]: section };
     });
@@ -136,7 +136,7 @@ export default function IndholdPage() {
 
   const removeItem = useCallback(<K extends Tab>(tab: K, field: string, index: number) => {
     setContent((prev) => {
-      const section = { ...(prev[tab] as Record<string, unknown>) };
+      const section = { ...(prev[tab] as unknown as Record<string, unknown>) };
       const arr = [...(section[field] as unknown[])];
       arr.splice(index, 1);
       section[field] = arr;
