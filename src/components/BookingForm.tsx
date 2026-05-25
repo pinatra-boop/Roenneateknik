@@ -63,6 +63,7 @@ interface CarInfo {
   fuel: string;
   variant?: string;
   engine?: string;
+  vin?: string;
 }
 
 interface SlotAvailability {
