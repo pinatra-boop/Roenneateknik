@@ -19,7 +19,7 @@ export default async function HomePage() {
         <Reviews />
         <BookingCTA content={content.booking_cta} />
       </main>
-      <Footer content={content.global} />
+      <Footer />
     </>
   );
 }
