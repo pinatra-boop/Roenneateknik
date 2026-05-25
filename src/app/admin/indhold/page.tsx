@@ -111,7 +111,7 @@ export default function IndholdPage() {
   const update = useCallback(
     <K extends Tab>(tab: K, path: string, value: unknown) => {
       setContent((prev) => {
-        const section = { ...(prev[tab] as Record<string, unknown>) };
+        const section = { ...(prev[tab] as unknown as Record<string, unknown>) };
         const keys = path.split(".");
         if (keys.length === 1) {
           section[keys[0]] = value;
