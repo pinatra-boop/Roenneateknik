@@ -69,14 +69,13 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Send emails
+    // Send emails in background — do not await so booking returns immediately
     const formattedDate = formatDate(new Date(data.date));
     const emailData = { ...data, date: formattedDate };
-
-    await Promise.allSettled([
+    Promise.allSettled([
       sendBookingConfirmation(emailData),
       sendBookingNotification(emailData),
-    ]);
+    ]).catch(() => {});
 
     return NextResponse.json({ success: true, bookingId: booking.id });
   } catch (err) {

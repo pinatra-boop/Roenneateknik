@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
 
     await prisma.contact.create({ data });
 
-    await sendContactNotification(data).catch(console.error);
+    sendContactNotification(data).catch(console.error);
 
     return NextResponse.json({ success: true });
   } catch (err) {
