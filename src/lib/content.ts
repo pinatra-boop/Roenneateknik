@@ -111,7 +111,7 @@ export const CONTENT_DEFAULTS: ContentMap = {
       { label: "Anbefaler os videre", value: 97 },
     ],
     reasons: [
-      { title: "AutoMester godkendt", description: "Vi er certificeret AutoMester-værksted, hvilket garanterer høj faglig standard og kvalitet." },
+      { title: "Alle bilmærker", description: "Vi servicerer alle mærker og modeller – fra veteran til moderne el-bil. Ingen bil er for gammel eller for ny." },
       { title: "Hurtig ekspedition", description: "Vi respekterer din tid. De fleste opgaver klares samme dag eller inden for 24 timer." },
       { title: "Moderne udstyr", description: "Vi investerer løbende i det nyeste diagnostik- og serviceudstyr til alle bilmærker." },
       { title: "Fair priser", description: "Ingen skjulte gebyrer. Du får et klart tilbud inden arbejdet begynder." },
