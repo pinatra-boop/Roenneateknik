@@ -67,8 +67,8 @@ export default function Navbar({
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link href="/" className="flex items-center gap-3 group">
-              <div className="w-10 h-10 rounded-xl bg-accent flex items-center justify-center shadow-lg shadow-accent/30 group-hover:scale-105 transition-transform">
-                <span className="text-white font-bold text-lg">R</span>
+              <div className="w-10 h-10 rounded-xl overflow-hidden shadow-lg shadow-accent/30 group-hover:scale-105 transition-transform">
+                <img src="/logo.jpg" alt="Rønne Autoteknik logo" className="w-full h-full object-cover" />
               </div>
               <div>
                 <p className="font-bold text-text leading-tight text-sm sm:text-base font-heading">

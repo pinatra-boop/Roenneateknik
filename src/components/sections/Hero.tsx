@@ -10,7 +10,7 @@ export default function Hero({ content }: { content?: HeroContent }) {
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-dark via-surface to-primary opacity-90" />
+      <div className="absolute inset-0 bg-linear-to-br from-primary-dark via-surface to-primary opacity-90" />
       <div
         className="absolute inset-0 opacity-5"
         style={{
@@ -108,13 +108,13 @@ export default function Hero({ content }: { content?: HeroContent }) {
             <div className="relative">
               <div className="glass-light rounded-3xl p-8 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl" />
-                <div className="relative h-64 bg-gradient-to-br from-primary to-surface-light rounded-2xl mb-6 flex items-center justify-center overflow-hidden">
-                  <div className="text-center">
-                    <Wrench size={64} className="text-accent/40 mx-auto mb-3 animate-float" />
-                    <p className="text-text-muted text-sm">Professionelt autoværksted</p>
-                  </div>
-                  <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-accent/5 rounded-full" />
-                  <div className="absolute -top-4 -left-4 w-24 h-24 bg-primary-light/10 rounded-full" />
+                <div className="relative h-64 rounded-2xl mb-6 overflow-hidden">
+                  <img
+                    src="/bygning.jpg"
+                    alt="Rønne Autoteknik bygning"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-primary/40 to-transparent" />
                 </div>
                 <motion.div
                   animate={{ y: [-4, 4, -4] }}
