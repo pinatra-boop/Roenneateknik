@@ -1,14 +1,9 @@
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST,
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: false,
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const FROM = process.env.SMTP_FROM ?? "Rønne Autoteknik <onboarding@resend.dev>";
+const WORKSHOP = process.env.WORKSHOP_EMAIL ?? "";
 
 interface BookingEmailData {
   customerName: string;
@@ -66,8 +61,8 @@ export async function sendBookingConfirmation(data: BookingEmailData) {
     </html>
   `;
 
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
+  await resend.emails.send({
+    from: FROM,
     to: data.email,
     subject: `Bookingbekræftelse – ${data.serviceType} d. ${data.date}`,
     html,
@@ -103,14 +98,12 @@ export async function sendBookingNotification(data: BookingEmailData) {
           <p style="color:#e8931a;margin:6px 0 0;font-size:15px;">Ny booking modtaget</p>
         </div>
         <div style="padding:28px 30px;">
-
           <h2 style="color:#0f2d5a;font-size:16px;margin:0 0 16px;">Kundeoplysninger</h2>
           <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
             <tr><td style="padding:7px 12px;color:#555;width:45%;border-bottom:1px solid #eee;">Navn</td><td style="padding:7px 12px;color:#111;font-weight:600;border-bottom:1px solid #eee;">${data.customerName}</td></tr>
             <tr><td style="padding:7px 12px;color:#555;border-bottom:1px solid #eee;">Email</td><td style="padding:7px 12px;border-bottom:1px solid #eee;"><a href="mailto:${data.email}" style="color:#0f2d5a;">${data.email}</a></td></tr>
             <tr><td style="padding:7px 12px;color:#555;border-bottom:1px solid #eee;">Telefon</td><td style="padding:7px 12px;border-bottom:1px solid #eee;"><a href="tel:${data.phone}" style="color:#0f2d5a;">${data.phone}</a></td></tr>
           </table>
-
           <h2 style="color:#0f2d5a;font-size:16px;margin:0 0 16px;">Booking</h2>
           <table style="width:100%;border-collapse:collapse;margin-bottom:24px;">
             <tr><td style="padding:7px 12px;color:#555;width:45%;border-bottom:1px solid #eee;">Service</td><td style="padding:7px 12px;color:#111;font-weight:600;border-bottom:1px solid #eee;">${data.serviceType}</td></tr>
@@ -118,12 +111,10 @@ export async function sendBookingNotification(data: BookingEmailData) {
             <tr><td style="padding:7px 12px;color:#555;border-bottom:1px solid #eee;">Tidspunkt</td><td style="padding:7px 12px;color:#111;font-weight:600;border-bottom:1px solid #eee;">${data.timeSlot}</td></tr>
             ${data.message ? `<tr><td style="padding:7px 12px;color:#555;border-bottom:1px solid #eee;">Besked</td><td style="padding:7px 12px;color:#333;border-bottom:1px solid #eee;">${data.message}</td></tr>` : ""}
           </table>
-
-          <h2 style="color:#0f2d5a;font-size:16px;margin:0 0 16px;">Køretøjsoplysninger (tjekbil.dk)</h2>
+          <h2 style="color:#0f2d5a;font-size:16px;margin:0 0 16px;">Køretøjsoplysninger</h2>
           <table style="width:100%;border-collapse:collapse;margin-bottom:24px;background:#f9f9f9;border-radius:6px;">
             ${carRows}
           </table>
-
           <div style="text-align:center;margin-top:8px;">
             <a href="${process.env.NEXTAUTH_URL}/admin/bookings" style="display:inline-block;background:#0f2d5a;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:bold;">Se booking i admin</a>
           </div>
@@ -133,9 +124,9 @@ export async function sendBookingNotification(data: BookingEmailData) {
     </html>
   `;
 
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
-    to: process.env.WORKSHOP_EMAIL,
+  await resend.emails.send({
+    from: FROM,
+    to: WORKSHOP,
     subject: `[Ny Booking] ${data.customerName} – ${data.serviceType} d. ${data.date}`,
     html,
   });
@@ -158,9 +149,9 @@ export async function sendContactNotification(data: {
     <p><a href="${process.env.NEXTAUTH_URL}/admin/contacts">Se i admin</a></p>
   `;
 
-  await transporter.sendMail({
-    from: process.env.SMTP_FROM,
-    to: process.env.WORKSHOP_EMAIL,
+  await resend.emails.send({
+    from: FROM,
+    to: WORKSHOP,
     subject: `[Ny Kontakt] ${data.name}`,
     html,
   });
