@@ -25,6 +25,12 @@ export default function Hero({ content }: { content?: HeroContent }) {
       <div className="absolute bottom-1/4 left-1/4 w-80 h-80 bg-primary-light/20 rounded-full blur-3xl" />
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+        {/* Bygningsbillede — kun synlig på mobil/tablet */}
+        <div className="lg:hidden mb-8 rounded-2xl overflow-hidden" style={{ height: "220px" }}>
+          <img src="/bygning.jpg" alt="Rønne Autoteknik" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-linear-to-t from-primary/60 to-transparent pointer-events-none" />
+        </div>
+
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div>
             <motion.div
