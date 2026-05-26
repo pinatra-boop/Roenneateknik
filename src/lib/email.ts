@@ -1,6 +1,8 @@
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResend() {
+  return new Resend(process.env.RESEND_API_KEY);
+}
 
 const FROM = process.env.SMTP_FROM ?? "Rønne Autoteknik <onboarding@resend.dev>";
 const WORKSHOP = process.env.WORKSHOP_EMAIL ?? "";
@@ -61,7 +63,7 @@ export async function sendBookingConfirmation(data: BookingEmailData) {
     </html>
   `;
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: data.email,
     subject: `Bookingbekræftelse – ${data.serviceType} d. ${data.date}`,
@@ -124,7 +126,7 @@ export async function sendBookingNotification(data: BookingEmailData) {
     </html>
   `;
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: WORKSHOP,
     subject: `[Ny Booking] ${data.customerName} – ${data.serviceType} d. ${data.date}`,
@@ -149,7 +151,7 @@ export async function sendContactNotification(data: {
     <p><a href="${process.env.NEXTAUTH_URL}/admin/contacts">Se i admin</a></p>
   `;
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: WORKSHOP,
     subject: `[Ny Kontakt] ${data.name}`,
