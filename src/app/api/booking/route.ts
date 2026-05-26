@@ -69,13 +69,18 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Send emails in background — do not await so booking returns immediately
     const formattedDate = formatDate(new Date(data.date));
     const emailData = { ...data, date: formattedDate };
-    Promise.allSettled([
+    const [confirmResult, notifyResult] = await Promise.allSettled([
       sendBookingConfirmation(emailData),
       sendBookingNotification(emailData),
-    ]).catch(() => {});
+    ]);
+    if (confirmResult.status === "rejected") {
+      console.error("Booking confirmation email failed:", confirmResult.reason);
+    }
+    if (notifyResult.status === "rejected") {
+      console.error("Booking notification email failed:", notifyResult.reason);
+    }
 
     return NextResponse.json({ success: true, bookingId: booking.id });
   } catch (err) {
