@@ -35,7 +35,11 @@ export async function POST(req: NextRequest) {
 
     const filename = `${randomUUID()}${ext}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    await writeFile(join(UPLOAD_DIR, filename), buffer);
+    const fullPath = join(UPLOAD_DIR, filename);
+    console.log("[upload] cwd:", process.cwd());
+    console.log("[upload] writing to:", fullPath);
+    await writeFile(fullPath, buffer);
+    console.log("[upload] write OK, url:", `/uploads/cars/${filename}`);
     urls.push(`/uploads/cars/${filename}`);
   }
 
