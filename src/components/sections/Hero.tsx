@@ -106,20 +106,17 @@ export default function Hero({ content }: { content?: HeroContent }) {
             className="hidden lg:block"
           >
             <div className="relative">
-              <div className="glass-light rounded-3xl p-8 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-40 h-40 bg-accent/10 rounded-full blur-2xl" />
-                <div className="relative h-64 rounded-2xl mb-6 overflow-hidden">
-                  <img
-                    src="/bygning.jpg"
-                    alt="Rønne Autoteknik bygning"
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-linear-to-t from-primary/40 to-transparent" />
-                </div>
+              <div className="rounded-3xl overflow-hidden relative" style={{ height: "420px" }}>
+                <img
+                  src="/bygning.jpg"
+                  alt="Rønne Autoteknik bygning"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-primary/70 via-transparent to-transparent" />
                 <motion.div
                   animate={{ y: [-4, 4, -4] }}
                   transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -bottom-4 -left-6 glass rounded-2xl p-4 shadow-xl w-52"
+                  className="absolute bottom-5 left-5 glass rounded-2xl p-4 shadow-xl w-52"
                 >
                   <div className="flex items-center gap-3 mb-2">
                     <div className="w-8 h-8 rounded-lg bg-green-500/20 flex items-center justify-center">
